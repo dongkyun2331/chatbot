@@ -1,13 +1,79 @@
-body {
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  background-color: #bacee0;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background-color: #fff;
+}
+
+.header-box {
+  width: 100%;
+  height: 100px;
+  position: relative;
+}
+
+.img {
+  position: absolute;
+  top: 40px;
+  left: 20px;
+  width: 50px;
+  height: 50px;
+}
+
+.input-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  background-color: #fff;
+}
+
+.input-box {
+  width: 100%;
+  height: 150px;
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  border: 0;
+  padding-left: 10px;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.button {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+}
+
+.send-button {
+  padding: 5px 10px;
+  background-color: #f2f2f2;
+  color: #b4b4b4;
+  border-radius: 5px;
+  border: 1px solid #b4b4b4;
 }
