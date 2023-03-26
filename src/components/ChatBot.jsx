@@ -1,12 +1,39 @@
 import React, { useState, useRef, useEffect } from "react";
 
 function ChatBot() {
+  //채팅창에 나타날 메시지들을 저장할 상태
   const [messages, setMessages] = useState([]);
+  //입력창의 내용을 저장할 상태
   const [inputText, setInputText] = useState("");
+  // textarea와 button 요소를 참조할 useRef
   const textareaRef = useRef(null);
   const buttonRef = useRef(null);
+  // 채팅창 스크롤을 자동으로 아래로 내려주기 위한 useRef
   const messagesEndRef = useRef(null);
+  //handleSubmit 함수는 전송 버튼이나 엔터키를 눌렀을 때 호출되는 함수입니다.
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    handleMessage(inputText);
+    setMessages([...messages, { text: inputText, isSent: true }]);
+    setInputText("");
+  };
+  // 입력된 메시지를 분석하고 답변을 출력하는 함수
+  const handleMessage = (inputText) => {
+    // 사용자가 입력한 메시지
+    const message = { text: inputText, isSent: true };
+    // 사용자가 입력한 메시지를 메시지 배열에 추가
+    setMessages([...messages, message]);
 
+    // 입력된 메시지를 분석하고 적절한 답변을 출력한다.
+    if (inputText.includes("안녕")) {
+      const reply = { text: "안녕하세요", isSent: false };
+      setMessages([...messages, reply]);
+    } else {
+      const reply = { text: "죄송해요, 잘 이해하지 못했어요.", isSent: false };
+      setMessages([...messages, reply]);
+    }
+  };
+  // 채팅창 스크롤을 자동으로 아래로 내려주는 기능
   useEffect(() => {
     const messagesEnd = messagesEndRef.current;
 
@@ -23,7 +50,7 @@ function ChatBot() {
       messagesEnd.removeEventListener("scroll", handleScroll);
     };
   }, [messagesEndRef]);
-
+  // 채팅창 높이를 동적으로 조절해주는 기능
   useEffect(() => {
     const container = document.querySelector(".messages-container");
     const header = document.querySelector(".header");
@@ -46,21 +73,14 @@ function ChatBot() {
       window.removeEventListener("resize", resizeHandler);
     };
   }, []);
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setMessages([...messages, { text: inputText, isSent: true }]);
-    setInputText("");
-  };
-
+  //handleInputChange 함수는 textarea에 입력된 값을 inputText 상태에 업데이트하는 역할을 합니다.
   const handleInputChange = (event) => {
     setInputText(event.target.value);
   };
-
+  // 입력창의 값이 변경될 때마다 버튼 스타일을 변경해주는 기능
   useEffect(() => {
     const textarea = textareaRef.current;
     const button = buttonRef.current;
-
     textarea.addEventListener("input", function () {
       if (textarea.value.trim() !== "") {
         button.style.backgroundColor = "#FEE500";
