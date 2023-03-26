@@ -22,7 +22,6 @@ body {
   left: 0;
   width: 100%;
   height: 100px;
-  background-color: #fff;
 }
 
 .header-box {
@@ -37,6 +36,13 @@ body {
   left: 20px;
   width: 50px;
   height: 50px;
+}
+
+h1 {
+  position: absolute;
+  top: 40px;
+  left: 90px;
+  font-size: 20px;
 }
 
 .input-container {
@@ -56,12 +62,15 @@ body {
 
 .input {
   width: 100%;
+  height: 100px;
   border: 0;
   padding-left: 10px;
+  resize: none;
 }
 
 .input:focus {
   outline: none;
+  vertical-align: text-top;
 }
 
 .button {
@@ -75,5 +84,26 @@ body {
   background-color: #f2f2f2;
   color: #b4b4b4;
   border-radius: 5px;
-  border: 1px solid #b4b4b4;
+  border: 0;
+}
+
+.messages-container {
+  display: flex;
+  flex-direction: column-reverse;
+  overflow: auto;
+  height: 300px;
+}
+
+.message {
+  display: flex;
+  justify-content: flex-end;
+  margin: 5px 0;
+}
+
+.message-bubble {
+  background-color: #f2f2f2;
+  color: #4d3636;
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 60%;
 }
