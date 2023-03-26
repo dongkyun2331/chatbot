@@ -13,26 +13,24 @@ function ChatBot() {
   //handleSubmit 함수는 전송 버튼이나 엔터키를 눌렀을 때 호출되는 함수입니다.
   const handleSubmit = (event) => {
     event.preventDefault();
+    setMessages([...messages, { text: inputText, isSent: true }]); // 사용자가 입력한 말 추가
     handleMessage(inputText);
-    setMessages([...messages, { text: inputText, isSent: true }]);
     setInputText("");
   };
   // 입력된 메시지를 분석하고 답변을 출력하는 함수
   const handleMessage = (inputText) => {
     // 사용자가 입력한 메시지
-    const message = { text: inputText, isSent: true };
-    // 사용자가 입력한 메시지를 메시지 배열에 추가
-    setMessages([...messages, message]);
-
-    // 입력된 메시지를 분석하고 적절한 답변을 출력한다.
+    const Message = { text: inputText, isSent: true };
+    // 챗봇이 응답할 메시지
+    let chatbotMessage = null;
     if (inputText.includes("안녕")) {
-      const reply = { text: "안녕하세요", isSent: false };
-      setMessages([...messages, reply]);
-    } else {
-      const reply = { text: "죄송해요, 잘 이해하지 못했어요.", isSent: false };
-      setMessages([...messages, reply]);
+      chatbotMessage = { text: "안녕하세요", isSent: false };
     }
+
+    // 메시지 배열에 사용자의 메시지와 챗봇의 응답을 추가
+    setMessages((messages) => [...messages, chatbotMessage].filter(Boolean)); // filters out null values from array
   };
+
   // 채팅창 스크롤을 자동으로 아래로 내려주는 기능
   useEffect(() => {
     const messagesEnd = messagesEndRef.current;
@@ -115,7 +113,10 @@ function ChatBot() {
           .slice(0)
           .reverse()
           .map((message, index) => (
-            <div key={index} className="message">
+            <div
+              key={index}
+              className={`message ${message.isSent ? "sent" : "received"}`}
+            >
               <div className="message-bubble">{message.text}</div>
             </div>
           ))}

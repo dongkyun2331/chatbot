@@ -119,3 +119,21 @@ h1 {
   border-radius: 10px;
   max-width: 60%;
 }
+
+.message.sent .message-bubble {
+  background-color: #fee500;
+}
+
+.message.received .message-bubble {
+  background-color: #f2f2f2;
+}
+
+.message.sent {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.message.received {
+  display: flex;
+  justify-content: flex-start;
+}
