@@ -14,6 +14,7 @@ a {
 
 body {
   background-color: #bacee0;
+  overflow-y: hidden;
 }
 
 .header {
@@ -89,17 +90,26 @@ h1 {
 }
 
 .messages-container {
-  margin: 100px 0 150px 0;
+  margin-top: 100px;
   display: flex;
   flex-direction: column-reverse;
-  height: calc(100% - 250px);
   overflow-y: auto;
+  overflow-anchor: none;
+}
+
+.messages-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+  background-color: #bbb;
+  border-radius: 10px;
 }
 
 .message {
   display: flex;
   justify-content: flex-end;
-  margin: 5px 0;
+  margin: 5px 10px;
 }
 
 .message-bubble {

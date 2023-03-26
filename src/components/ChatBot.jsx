@@ -24,6 +24,29 @@ function ChatBot() {
     };
   }, [messagesEndRef]);
 
+  useEffect(() => {
+    const container = document.querySelector(".messages-container");
+    const header = document.querySelector(".header");
+    const inputContainer = document.querySelector(".input-container");
+
+    const resizeHandler = () => {
+      const windowHeight = window.innerHeight;
+      const headerHeight = header.offsetHeight;
+      const inputContainerHeight = inputContainer.offsetHeight;
+      container.style.height = `${
+        windowHeight - headerHeight - inputContainerHeight
+      }px`;
+    };
+
+    resizeHandler();
+
+    window.addEventListener("resize", resizeHandler);
+
+    return () => {
+      window.removeEventListener("resize", resizeHandler);
+    };
+  }, []);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     setMessages([...messages, { text: inputText, isSent: true }]);
@@ -60,14 +83,14 @@ function ChatBot() {
   };
 
   return (
-    <div className="chatbot-container" ref={messagesEndRef}>
+    <div className="chatbot-container">
       <div className="header">
         <div className="header-box">
           <img src="images/profile.png" className="img" />
           <h1>챗봇</h1>
         </div>
       </div>
-      <div className="messages-container">
+      <div className="messages-container" ref={messagesEndRef}>
         {messages
           .slice(0)
           .reverse()
