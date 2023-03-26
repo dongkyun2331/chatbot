@@ -30,7 +30,7 @@ function ChatBot() {
     // 메시지 배열에 사용자의 메시지와 챗봇의 응답을 추가
     setMessages((messages) => [...messages, chatbotMessage].filter(Boolean)); // filters out null values from array
   };
-  //
+
   // 채팅창 스크롤을 자동으로 아래로 내려주는 기능
   useEffect(() => {
     const messagesEnd = messagesEndRef.current;
