@@ -22,6 +22,7 @@ body {
   left: 0;
   width: 100%;
   height: 100px;
+  background-color: #bacee0;
 }
 
 .header-box {
@@ -88,10 +89,11 @@ h1 {
 }
 
 .messages-container {
+  margin: 100px 0 150px 0;
   display: flex;
   flex-direction: column-reverse;
-  overflow: auto;
-  height: 300px;
+  height: calc(100% - 250px);
+  overflow-y: auto;
 }
 
 .message {
@@ -101,7 +103,7 @@ h1 {
 }
 
 .message-bubble {
-  background-color: #f2f2f2;
+  background-color: #fee500;
   color: #4d3636;
   padding: 10px;
   border-radius: 10px;

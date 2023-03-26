@@ -5,6 +5,24 @@ function ChatBot() {
   const [inputText, setInputText] = useState("");
   const textareaRef = useRef(null);
   const buttonRef = useRef(null);
+  const messagesEndRef = useRef(null);
+
+  useEffect(() => {
+    const messagesEnd = messagesEndRef.current;
+
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = messagesEnd;
+      if (scrollHeight - scrollTop === clientHeight) {
+        messagesEnd.scrollTop = messagesEnd.scrollHeight;
+      }
+    };
+
+    messagesEnd.addEventListener("scroll", handleScroll);
+
+    return () => {
+      messagesEnd.removeEventListener("scroll", handleScroll);
+    };
+  }, [messagesEndRef]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -35,11 +53,14 @@ function ChatBot() {
     if (event.key === "Enter") {
       event.preventDefault();
       buttonRef.current.click();
+      const button = buttonRef.current;
+      button.style.backgroundColor = "#f2f2f2";
+      button.style.color = "#b4b4b4";
     }
   };
 
   return (
-    <div className="chatbot-container">
+    <div className="chatbot-container" ref={messagesEndRef}>
       <div className="header">
         <div className="header-box">
           <img src="images/profile.png" className="img" />
