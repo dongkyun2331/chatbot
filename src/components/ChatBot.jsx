@@ -1,4 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
+import { Configuration, OpenAIApi } from "openai";
+const configuration = new Configuration({
+  organization: "org-2ZP92m8ymAycrK6PiaPFvWLo",
+  apiKey: process.env.sk - Q1u6Uvib9i9wKKvShF7MT3BlbkFJn4lw75ecSfvx1HCsb4op,
+});
+const openai = new OpenAIApi(configuration);
+const response = await openai.listEngines();
 
 function ChatBot() {
   //채팅창에 나타날 메시지들을 저장할 상태
