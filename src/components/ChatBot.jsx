@@ -48,7 +48,7 @@ function ChatBot() {
     if (inputText.includes("안녕")) {
       chatbotMessage = { text: "안녕하세요", isSent: false };
     }
-    //
+
     // 서울 또는 부산의 날씨 정보를 가져오는 API 호출 및 처리
     if (inputText.includes("날씨")) {
       const cityName = inputText.split(" ")[0]; // 첫 단어가 도시명
