@@ -17,6 +17,28 @@ function ChatBot() {
     handleMessage(inputText);
     setInputText("");
   };
+
+  const cityNameMap = {
+    부산: "Busan",
+    서울: "Seoul",
+    대구: "Daegu",
+    인천: "Incheon",
+    광주: "Gwangju",
+    대전: "Daejeon",
+    울산: "Ulsan",
+    세종: "Sejong",
+    경기도: "Gyeonggi-do",
+    강원도: "Gangwon-do",
+    충청북도: "Chungcheongbuk-do",
+    충청남도: "Chungcheongnam-do",
+    전라북도: "Jeollabuk-do",
+    전라남도: "Jeollanam-do",
+    경상북도: "Gyeongsangbuk-do",
+    경상남도: "Gyeongsangnam-do",
+    제주도: "Jeju-do",
+    // 지원하는 도시들에 대해서 추가로 매핑 정보를 입력해주세요.
+  };
+
   // 입력된 메시지를 분석하고 답변을 출력하는 함수
   const handleMessage = (inputText) => {
     // 사용자가 입력한 메시지
@@ -25,6 +47,36 @@ function ChatBot() {
     let chatbotMessage = null;
     if (inputText.includes("안녕")) {
       chatbotMessage = { text: "안녕하세요", isSent: false };
+    }
+
+    // 서울 또는 부산의 날씨 정보를 가져오는 API 호출 및 처리
+    if (inputText.includes("날씨")) {
+      const cityName = inputText.split(" ")[0]; // 첫 단어가 도시명
+      const city = cityNameMap[cityName] || cityName;
+      let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=08af5ae1fb652af67e2f91bdf5f1c641&units=metric&lang=kr`;
+      fetch(apiUrl)
+        .then((response) => response.json())
+        .then((data) => {
+          const { name, weather, main } = data;
+          const description = weather[0].description;
+          const temp = main.temp;
+          chatbotMessage = {
+            text: `${name}의 날씨는 ${description}, 온도는 ${temp}도 입니다.`,
+            isSent: false,
+          };
+          // 메시지 배열에 사용자의 메시지와 챗봇의 응답을 추가
+          setMessages((messages) => [...messages, chatbotMessage]);
+        })
+        .catch((error) => {
+          console.error("날씨 정보를 가져오는 중 오류가 발생했습니다.", error);
+          chatbotMessage = {
+            text: `${cityName}의 날씨 정보를 가져올 수 없습니다. 영어도시명 날씨 라고 물어봐주세요. 주요도시는 한글지원이 됩니다.`,
+            isSent: false,
+          };
+          // 메시지 배열에 사용자의 메시지와 챗봇의 응답을 추가
+          setMessages((messages) => [...messages, chatbotMessage]);
+        });
+      return;
     }
 
     // 메시지 배열에 사용자의 메시지와 챗봇의 응답을 추가
