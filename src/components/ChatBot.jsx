@@ -152,10 +152,6 @@ function ChatBot() {
       const button = buttonRef.current;
       button.style.backgroundColor = "#f2f2f2";
       button.style.color = "#b4b4b4";
-      // textarea 크기 조정
-      textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height =
-        textareaRef.current.scrollHeight + "px";
     }
   };
 
