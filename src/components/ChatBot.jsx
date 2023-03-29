@@ -1,11 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Configuration, OpenAIApi } from "openai";
-const configuration = new Configuration({
-  organization: "org-2ZP92m8ymAycrK6PiaPFvWLo",
-  apiKey: process.env.sk - Q1u6Uvib9i9wKKvShF7MT3BlbkFJn4lw75ecSfvx1HCsb4op,
-});
-const openai = new OpenAIApi(configuration);
-const response = await openai.listEngines();
 
 function ChatBot() {
   //채팅창에 나타날 메시지들을 저장할 상태
@@ -13,11 +6,12 @@ function ChatBot() {
   //입력창의 내용을 저장할 상태
   const [inputText, setInputText] = useState("");
   // textarea와 button 요소를 참조할 useRef
-  const textareaRef = useRef(null);
-  const buttonRef = useRef(null);
+  const textareaRef = useRef();
+  const buttonRef = useRef();
   // 채팅창 스크롤을 자동으로 아래로 내려주기 위한 useRef
   const messagesEndRef = useRef(null);
-  //handleSubmit 함수는 전송 버튼이나 엔터키를 눌렀을 때 호출되는 함수입니다.
+
+  //   handleSubmit 함수는 전송 버튼이나 엔터키를 눌렀을 때 호출되는 함수입니다.
   const handleSubmit = (event) => {
     event.preventDefault();
     setMessages([...messages, { text: inputText, isSent: true }]); // 사용자가 입력한 말 추가
@@ -52,9 +46,6 @@ function ChatBot() {
     const Message = { text: inputText, isSent: true };
     // 챗봇이 응답할 메시지
     let chatbotMessage = null;
-    if (inputText.includes("안녕")) {
-      chatbotMessage = { text: "안녕하세요", isSent: false };
-    }
 
     // 서울 또는 부산의 날씨 정보를 가져오는 API 호출 및 처리
     if (inputText.includes("날씨")) {
@@ -77,13 +68,18 @@ function ChatBot() {
         .catch((error) => {
           console.error("날씨 정보를 가져오는 중 오류가 발생했습니다.", error);
           chatbotMessage = {
-            text: `${cityName}의 날씨 정보를 가져올 수 없습니다. 영어도시명 날씨 라고 물어봐주세요. 주요도시는 한글지원이 됩니다.`,
+            text: `${cityName}의 날씨 정보를 가져올 수 없습니다. 영어도시명 날씨 라고 물어봐주세요. 띄어쓰기 해주세요. 한국 몇몇 주요도시는 한글지원이 됩니다.`,
             isSent: false,
           };
           // 메시지 배열에 사용자의 메시지와 챗봇의 응답을 추가
           setMessages((messages) => [...messages, chatbotMessage]);
         });
       return;
+    } else {
+      chatbotMessage = {
+        text: "미안해요. 잘 이해하지 못했어요. 다시 한번 설명해주세요.",
+        isSent: false,
+      };
     }
 
     // 메시지 배열에 사용자의 메시지와 챗봇의 응답을 추가
@@ -202,5 +198,4 @@ function ChatBot() {
     </div>
   );
 }
-
 export default ChatBot;
