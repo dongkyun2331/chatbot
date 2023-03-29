@@ -121,7 +121,7 @@ h1 {
 }
 
 .message.sent .message-bubble {
-  background-color: #fee500;
+  background-color: red;
 }
 
 .message.received .message-bubble {
