@@ -1,5 +1,3 @@
-npm install jquery
-
 npm install -g firebase-tools
 
 npm run build
