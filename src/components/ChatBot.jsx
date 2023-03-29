@@ -55,16 +55,17 @@ function ChatBot() {
       fetch(apiUrl)
         .then((response) => response.json())
         .then((data) => {
-          const { name, weather, main } = data;
+          const { weather, main } = data;
           const description = weather[0].description;
           const temp = main.temp;
           chatbotMessage = {
-            text: `${name}의 날씨는 ${description}, 온도는 ${temp}도 입니다.`,
+            text: `${cityName}의 날씨는 ${description}, 온도는 ${temp}도 입니다.`,
             isSent: false,
           };
           // 메시지 배열에 사용자의 메시지와 챗봇의 응답을 추가
           setMessages((messages) => [...messages, chatbotMessage]);
         })
+
         .catch((error) => {
           console.error("날씨 정보를 가져오는 중 오류가 발생했습니다.", error);
           chatbotMessage = {
@@ -72,6 +73,63 @@ function ChatBot() {
             isSent: false,
           };
           // 메시지 배열에 사용자의 메시지와 챗봇의 응답을 추가
+          setMessages((messages) => [...messages, chatbotMessage]);
+        });
+      return;
+    }
+    if (inputText.includes("이번 주")) {
+      const cityName = inputText.split(" ")[0];
+      const city = cityNameMap[cityName] || cityName;
+      let apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=08af5ae1fb652af67e2f91bdf5f1c641&units=metric&lang=kr`;
+      fetch(apiUrl)
+        .then((response) => response.json())
+        .then((data) => {
+          const forecastList = data.list;
+          const forecastByDay = {};
+          forecastList.forEach((forecast) => {
+            const forecastDate = forecast.dt_txt.split(" ")[0];
+            if (!forecastByDay[forecastDate]) {
+              forecastByDay[forecastDate] = [];
+            }
+            forecastByDay[forecastDate].push(forecast);
+          });
+
+          let messageText = `${cityName}의 이번 주 날씨 정보입니다. \n\n`;
+          Object.keys(forecastByDay).forEach((date) => {
+            const forecastList = forecastByDay[date];
+            const dateObj = new Date(date);
+            const dateString = dateObj.toLocaleDateString("ko-KR", {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            });
+            messageText += `📅 ${dateString}\n`;
+
+            forecastList.forEach((forecast) => {
+              const time = forecast.dt_txt.split(" ")[1].slice(0, 5);
+              const weather = forecast.weather[0];
+              const description = weather.description;
+              const temp = `${forecast.main.temp.toFixed(2)}℃`; // 소수점 둘째자리까지 표시
+              messageText += `   ${time} ${description} ${temp}\n`;
+            });
+
+            messageText += "\n";
+          });
+
+          const chatbotMessage = {
+            text: messageText.trim(),
+            isSent: false,
+          };
+
+          setMessages((messages) => [...messages, chatbotMessage]);
+        })
+        .catch((error) => {
+          console.error("날씨 정보를 가져오는 중 오류가 발생했습니다.", error);
+          const chatbotMessage = {
+            text: `${cityName}의 이번 주 날씨 정보를 가져올 수 없습니다. 영어도시명 이번 주 라고 물어봐주세요. 띄어쓰기 해주세요. 한국 몇몇 주요도시는 한글지원이 됩니다.`,
+            isSent: false,
+          };
           setMessages((messages) => [...messages, chatbotMessage]);
         });
       return;
