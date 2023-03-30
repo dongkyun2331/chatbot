@@ -135,7 +135,7 @@ function ChatBot() {
       return;
     } else {
       chatbotMessage = {
-        text: "명령어 : 영어도시명 날씨, 영어도시명 이번 주 (한국 주요도시는 한글지원)",
+        text: "명령어 :\n 영어도시명 날씨\n 영어도시명 이번 주\n (한국 주요도시는 한글지원)",
         isSent: false,
       };
     }
