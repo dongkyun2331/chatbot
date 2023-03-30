@@ -95,6 +95,7 @@ h1 {
   flex-direction: column-reverse;
   overflow-y: auto;
   overflow-anchor: none;
+  white-space: pre-wrap;
 }
 
 .messages-container::-webkit-scrollbar {

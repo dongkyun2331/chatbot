@@ -127,7 +127,7 @@ function ChatBot() {
         .catch((error) => {
           console.error("날씨 정보를 가져오는 중 오류가 발생했습니다.", error);
           const chatbotMessage = {
-            text: `${cityName}의 이번 주 날씨 정보를 가져올 수 없습니다. 영어도시명 이번 주 라고 물어봐주세요. 띄어쓰기 해주세요. 한국 몇몇 주요도시는 한글지원이 됩니다.`,
+            text: `${cityName}의 이번 주 날씨 정보를 가져올 수 없습니다. 영어도시명 이번 주 라고 물어봐주세요. 띄어쓰기 해주세요. 한국 주요도시는 한글지원이 됩니다.`,
             isSent: false,
           };
           setMessages((messages) => [...messages, chatbotMessage]);
@@ -135,7 +135,7 @@ function ChatBot() {
       return;
     } else {
       chatbotMessage = {
-        text: "미안해요. 잘 이해하지 못했어요. 다시 한번 설명해주세요.",
+        text: "명령어 : 영어도시명 날씨, 영어도시명 이번 주 / 한국 주요도시는 한글지원",
         isSent: false,
       };
     }
@@ -245,6 +245,7 @@ function ChatBot() {
               onKeyDown={handleKeyDown}
               ref={textareaRef}
             ></textarea>
+
             <div className="button">
               <button id="myButton" class="send-button" ref={buttonRef}>
                 전송
