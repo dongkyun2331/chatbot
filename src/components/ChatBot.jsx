@@ -61,10 +61,7 @@ function ChatBot() {
     const formatNewsMessage = (articles) => {
       let message = "📰 최신 뉴스 기사입니다.\n\n";
       articles.forEach((article) => {
-        message += `🔹 ${article.title}\n${article.url.replace(
-          article.url,
-          `<a href="${article.url}" target="_blank">${article.url}</a>`
-        )}\n\n`;
+        message += `🔹 ${article.title}\n${article.url}\n\n`;
       });
       return message.trim(); // 문자열 앞뒤의 공백 제거
     };
@@ -268,7 +265,27 @@ function ChatBot() {
               key={index}
               className={`message ${message.isSent ? "sent" : "received"}`}
             >
-              <div className="message-bubble">{message.text}</div>
+              <div className="message-bubble">
+                {message.text.split("\n").map((line, index) => {
+                  if (line.startsWith("🔹")) {
+                    return (
+                      <div key={index}>
+                        <b>{line}</b>
+                      </div>
+                    );
+                  } else if (line.startsWith("http")) {
+                    return (
+                      <div key={index}>
+                        <a href={line} target="_blank" rel="noreferrer">
+                          {line}
+                        </a>
+                      </div>
+                    );
+                  } else {
+                    return <div key={index}>{line}</div>;
+                  }
+                })}
+              </div>
             </div>
           ))}
       </div>
