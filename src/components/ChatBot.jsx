@@ -61,7 +61,10 @@ function ChatBot() {
     const formatNewsMessage = (articles) => {
       let message = "📰 최신 뉴스 기사입니다.\n\n";
       articles.forEach((article) => {
-        message += `🔹 ${article.title}\n${article.url}\n\n`;
+        message += `🔹 ${article.title}\n${article.url.replace(
+          article.url,
+          `<a href="${article.url}" target="_blank">${article.url}</a>`
+        )}\n\n`;
       });
       return message.trim(); // 문자열 앞뒤의 공백 제거
     };
@@ -170,7 +173,7 @@ function ChatBot() {
       return;
     } else {
       chatbotMessage = {
-        text: "명령어 :\n 영어도시명 날씨\n 영어도시명 이번 주\n (한국 주요도시는 한글지원)",
+        text: "명령어 :\n 뉴스\n 영어도시명 날씨\n 영어도시명 이번 주\n (한국 주요도시는 한글지원)",
         isSent: false,
       };
     }
