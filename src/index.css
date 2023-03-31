@@ -138,3 +138,7 @@ h1 {
   display: flex;
   justify-content: flex-start;
 }
+
+textarea {
+  font-size: 17px;
+}
