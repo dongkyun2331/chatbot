@@ -97,6 +97,7 @@ h1 {
   overflow-anchor: none;
   white-space: pre-wrap;
   word-wrap: break-word;
+  white-space: pre-line;
 }
 
 .messages-container::-webkit-scrollbar {
