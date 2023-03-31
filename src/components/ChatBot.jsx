@@ -47,6 +47,41 @@ function ChatBot() {
     // 챗봇이 응답할 메시지
     let chatbotMessage = null;
 
+    // 뉴스 API에서 최신 뉴스 기사를 가져오는 함수
+    const getNews = async () => {
+      const apiKey = "6d61aad7afd24079bf07e94693c4268d"; // NewsAPI에서 발급받은 API Key를 입력해주세요.
+      const response = await fetch(
+        `https://newsapi.org/v2/top-headlines?country=kr&apiKey=${apiKey}`
+      );
+      const data = await response.json();
+      return data.articles;
+    };
+
+    // 뉴스 API에서 가져온 기사 데이터를 메시지로 변환하는 함수
+    const formatNewsMessage = (articles) => {
+      let message = "📰 최신 뉴스 기사입니다.\n\n";
+      articles.forEach((article) => {
+        message += `🔹 ${article.title}\n${article.url}\n\n`;
+      });
+      return message.trim(); // 문자열 앞뒤의 공백 제거
+    };
+
+    // 뉴스 기사를 가져와서 메시지로 변환하고 메시지 배열에 추가하는 함수
+    const handleNewsRequest = async () => {
+      const articles = await getNews();
+      const newsMessage = formatNewsMessage(articles);
+      const chatbotMessage = {
+        text: newsMessage,
+        isSent: false,
+      };
+      setMessages((messages) => [...messages, chatbotMessage]);
+    };
+
+    if (inputText.includes("뉴스")) {
+      handleNewsRequest();
+      return;
+    }
+
     // 서울 또는 부산의 날씨 정보를 가져오는 API 호출 및 처리
     if (inputText.includes("날씨")) {
       const cityName = inputText.split(" ")[0]; // 첫 단어가 도시명
