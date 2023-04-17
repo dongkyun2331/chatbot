@@ -7,5 +7,3 @@ firebase login
 firebase init
 
 firebase deploy
-
-npm i react-copy-to-clipboard
