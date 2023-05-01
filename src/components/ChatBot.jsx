@@ -247,7 +247,7 @@ function ChatBot() {
             ></textarea>
 
             <div className="button">
-              <button id="myButton" class="send-button" ref={buttonRef}>
+              <button id="myButton" className="send-button" ref={buttonRef}>
                 전송
               </button>
             </div>
