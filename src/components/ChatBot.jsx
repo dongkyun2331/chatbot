@@ -1,5 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 
+function handleWindowCopy() {
+  alert("복사 완료");
+}
+
+window.addEventListener("copy", handleWindowCopy);
+
 function ChatBot() {
   //채팅창에 나타날 메시지들을 저장할 상태
   const [messages, setMessages] = useState([]);
