@@ -45,6 +45,7 @@ function ChatBot() {
     제주도: "Jeju-do",
     // 지원하는 도시들에 대해서 추가로 매핑 정보를 입력해주세요.
   };
+  const API_KEY = process.env.REACT_APP_API_KEY;
 
   // 입력된 메시지를 분석하고 답변을 출력하는 함수
   const handleMessage = (inputText) => {
@@ -57,7 +58,7 @@ function ChatBot() {
     if (inputText.includes("날씨")) {
       const cityName = inputText.split(" ")[0]; // 첫 단어가 도시명
       const city = cityNameMap[cityName] || cityName;
-      let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=08af5ae1fb652af67e2f91bdf5f1c641&units=metric&lang=kr`;
+      let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric&lang=kr`;
       fetch(apiUrl)
         .then((response) => response.json())
         .then((data) => {
@@ -86,7 +87,7 @@ function ChatBot() {
     if (inputText.includes("이번 주")) {
       const cityName = inputText.split(" ")[0];
       const city = cityNameMap[cityName] || cityName;
-      let apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=08af5ae1fb652af67e2f91bdf5f1c641&units=metric&lang=kr`;
+      let apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=metric&lang=kr`;
       fetch(apiUrl)
         .then((response) => response.json())
         .then((data) => {
